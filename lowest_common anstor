@@ -1,4 +1,4 @@
-/ ----------BINARY TREE REPRESENTATION------------
+// / ---------- LOWEST COMMON ASENCTOR BINARY TREe------------
       
 #include "bits/stdc++.h"
 using namespace std;
@@ -50,7 +50,28 @@ if(get_path(root, n1, path1)|| get_path(root, n2, path2)){
   }
    return path1[pc-1];
     }
-  
+    
+ Node* LCA2(Node*root, int n2, int n1) {
+     if(root == NULL){
+return NULL;
+     }
+     if(root->data == n1 || root->data == n2){
+         return root;
+     }
+     
+     Node*left_LCA= LCA2(root->left , n2, n1);
+     Node*right_LCA=LCA2(root->right,n2,n1);
+     
+     if(left_LCA && right_LCA){
+         return root;
+     }
+     if(left_LCA != NULL){
+        return left_LCA ;
+     }
+     return right_LCA;
+ }
+ 
+ 
   
   
   
@@ -77,14 +98,13 @@ int main()
             int n1=7;
             int n2=6;
             
-            int lca = LCA(root, n1, n2);
-            if(lca == -1){
+            Node* lca = LCA2(root, n1, n2);
+            if(lca == NULL){
                 cout<<"LCA does not exist"<<endl;
             }
             else{
-                cout<<"LCA"<<lca<<endl;
+                cout<<"LCA"<<lca->data<<endl;
             }
             
     return 0;
 }
-
